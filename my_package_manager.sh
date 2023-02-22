@@ -1,5 +1,12 @@
 #!/bin/bash
 
+## Get sudo permissions
+if [ $EUID != 0 ]; then
+    sudo "$0" "$@"
+    exit $?
+fi
+
+
 USING_SOURCE=0
 
 ## Ask for folder name
@@ -21,7 +28,14 @@ esac
 ## Ask for link to package file
 echo 'Please enter the link to the package download: '
 read -p 'Link: ' LINK
-
 BASENAME=$(basename $LINK)
 
-echo $BASENAME
+## Create directory in /usr/local/src
+FOLDER_PATH=/usr/local/src/$FOLDER_NAME
+umask 000
+
+chmod +w /usr/local/src
+mkdir $FOLDER_PATH
+
+## Download package using Link
+wget $LINK -P $FOLDER_PATH
