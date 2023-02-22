@@ -39,3 +39,13 @@ mkdir $FOLDER_PATH
 
 ## Download package using Link
 wget $LINK -P $FOLDER_PATH
+
+
+## Report if the installation was Succesfull
+
+
+## if Unsuccesfull check why, and install any missing dependencies then retry the package install
+
+
+
+
