@@ -45,7 +45,8 @@ wget $LINK -P "$FOLDER_PATH/.."
 ## Unpack / Compile
 if [ $USING_SOURCE -eq 0 ]; then
 	# Use DPKG
-	sudo dpkg -i $BASENAME
+	mv $BASENAME "$FOLDER_PATH"
+	sudo dpkg -i "$FOLDER_PATH/$BASENAME" 
 	sudo apt -f install
 else
 	# Source
