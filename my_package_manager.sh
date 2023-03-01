@@ -45,7 +45,8 @@ wget $LINK -P "$FOLDER_PATH/.."
 ## Unpack / Compile
 if [ $USING_SOURCE -eq 0 ]; then
 	# Use DPKG
-	Echo use DPKG	
+	sudo dpkg -i $BASENAME
+	sudo apt -f install
 else
 	# Source
 	pwd
