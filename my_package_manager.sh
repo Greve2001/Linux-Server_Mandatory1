@@ -35,11 +35,28 @@ FOLDER_PATH=/usr/local/src/$FOLDER_NAME
 umask 000
 
 chmod +w /usr/local/src
-mkdir $FOLDER_PATH
+mkdir "$FOLDER_PATH"
+cd "$FOLDER_PATH/.."
 
 ## Download package using Link
-wget $LINK -P $FOLDER_PATH
+wget $LINK -P "$FOLDER_PATH/.."
 
+
+## Unpack / Compile
+if [ $USING_SOURCE -eq 0 ]; then
+	# Use DPKG
+	Echo use DPKG	
+else
+	# Source
+	pwd
+	sudo tar -xf $BASENAME -C $FOLDER_PATH --strip-components 1
+	cd "$FOLDER_PATH"
+	pwd
+	./configure
+	sudo make
+	sudo make install
+
+fi
 
 ## Report if the installation was Succesfull
 
