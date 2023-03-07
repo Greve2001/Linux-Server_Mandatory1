@@ -61,10 +61,25 @@ else
 fi
 
 ## Report if the installation was Succesfull
+sudo dpkg -s $BASENAME
+
+	##Need to find/read the 2nd line from dpkg into PACKAGESTATE:
+PACKAGESTATE=""
+
+
+SUCCESS="Status: install ok installed"
+
+if [PACKAGESTATE eq SUCCESS]; then
+	echo 'install succesfull'
+else
+	echo 'unsuccesfull install, trying again'
 
 
 ## if Unsuccesfull check why, and install any missing dependencies then retry the package install
+sudo dpkg -s $BASENAME
 
+	##Need to find/read the 2nd line from dpkg into PACKAGESTATE:
+DEPENDENT_ON=""
 
 
 
