@@ -70,14 +70,14 @@ SUCCESS="Status: install ok installed"
 if [PACKAGESTATE eq SUCCESS]; then
 	echo 'install succesfull'
 else
+	## if Unsuccesfull check why, and install any missing dependencies then retry the package install
 	echo 'unsuccesfull install, trying again'
+
+	sudo dpkg -s $BASENAME
+	sudo apt-get install $BASENAME
 fi
 
-## if Unsuccesfull check why, and install any missing dependencies then retry the package install
-sudo dpkg -s $BASENAME
-
-	##Need to find/read the 2nd line from dpkg into PACKAGESTATE:
-DEPENDENT_ON=""
+echo done..
 
 
 
