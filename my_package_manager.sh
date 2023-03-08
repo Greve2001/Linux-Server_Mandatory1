@@ -14,7 +14,9 @@ echo 'What should the package folder be called?'
 read -p 'Folder: ' FOLDER_NAME
 
 ## Ask if installing using source or dpkg
-read -p 'Do you want to use source? Default is using dpkg (y/N) ' yN
+read -n1 -p 'Do you want to use source? Default is using dpkg (y/N) ' yN
+echo "" # Just for aesthetics
+
 case $yN in
 	[yY] )  echo "Using source"
 		USING_SOURCE=1
@@ -41,13 +43,25 @@ cd "$FOLDER_PATH/.."
 ## Download package using Link
 wget $LINK -P "$FOLDER_PATH/.."
 
-
 ## Unpack / Compile
 if [ $USING_SOURCE -eq 0 ]; then
 	# Use DPKG
 	mv $BASENAME "$FOLDER_PATH"
-	sudo dpkg -i "$FOLDER_PATH/$BASENAME" 
-	sudo apt -f install
+
+	FAILED=false
+	sudo dpkg -i "$FOLDER_PATH/$BASENAME" || FAILED=true
+
+	if [ FAILED ]; then
+		read -n1 -p "Installation failed. Do you want to fix it using apt? [Y/n]" Yn
+		case $Yn in
+			[yY] )	sudo apt -f install
+				;;
+			[nN] )  break
+				;;
+			* )	sudo apt -f install
+				;;
+		esac
+	fi
 else
 	# Source
 	pwd
@@ -68,16 +82,16 @@ SUCCESS_STATE=$(awk 'NR==2' $PACKAGESTATE)
 SUCCESS="Status: install ok installed"
 
 if [PACKAGESTATE eq SUCCESS]; then
-	echo 'install succesfull'
+	echo 'Installation was succesfull!'
 else
 	## if Unsuccesfull check why, and install any missing dependencies then retry the package install
-	echo 'unsuccesfull install, trying again'
+	echo 'Unsuccesfull installation, trying again...'
 
 	sudo dpkg -s $BASENAME
 	sudo apt-get install $BASENAME
 fi
 
-echo done..
+echo "Done!"
 
 
 
