@@ -56,7 +56,7 @@ dpkg () {
 	FAILED=false
 	sudo dpkg -i "$FOLDER_PATH/$BASENAME" || FAILED=true
 
-	if [ FAILED ]; then
+	if $FAILED ; then
 		read -s -n1 -p "Installation failed. Do you want to fix it using apt? [Y/n]" Yn
 		case $Yn in
 			[yY] )	sudo apt -f install
