@@ -72,7 +72,10 @@ dpkg () {
 	PACKAGESTATE=$(sudo dpkg -s $BASENAME)
 
 	##Need to find/read the 2nd line from dpkg into PACKAGESTATE:
-	SUCCESS_STATE=$(awk 'NR==2' $PACKAGESTATE)
+	SUCCESS_STATE=$(echo $PACKAGESTATE | grep "Status:")
+
+	echo "\n$SUCCES_STATE\n"
+	exit
 	SUCCESS="Status: install ok installed"
 
 	if [$PACKAGESTATE == $SUCCESS]; then
