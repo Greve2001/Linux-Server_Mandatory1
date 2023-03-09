@@ -75,7 +75,7 @@ dpkg () {
 	SUCCESS_STATE=$(awk 'NR==2' $PACKAGESTATE)
 	SUCCESS="Status: install ok installed"
 
-	if [PACKAGESTATE eq SUCCESS]; then
+	if [$PACKAGESTATE == $SUCCESS]; then
 		echo 'Installation was succesfull!'
 	else
 		## if Unsuccesfull check why, and install any missing dependencies then retry the package install
