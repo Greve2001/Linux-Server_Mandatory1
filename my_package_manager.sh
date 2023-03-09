@@ -68,25 +68,26 @@ dpkg () {
 		esac
 	fi
 	
+	
 	## Report if the installation was Succesfull
-	PACKAGESTATE=$(sudo dpkg -s $BASENAME)
+	## PACKAGESTATE=$(sudo dpkg -s $BASENAME)
 
 	##Need to find/read the 2nd line from dpkg into PACKAGESTATE:
-	SUCCESS_STATE=$(echo $PACKAGESTATE | grep "Status:")
+	## SUCCESS_STATE=$(echo $PACKAGESTATE | grep "Status:")
 
-	echo "\n$SUCCES_STATE\n"
-	exit
-	SUCCESS="Status: install ok installed"
+	## echo "\n$SUCCES_STATE\n"
+	## exit
+	## SUCCESS="Status: install ok installed"
 
-	if [$PACKAGESTATE == $SUCCESS]; then
-		echo 'Installation was succesfull!'
-	else
+	## if [$PACKAGESTATE == $SUCCESS]; then
+	##	echo 'Installation was succesfull!'
+	## else
 		## if Unsuccesfull check why, and install any missing dependencies then retry the package install
-		echo 'Unsuccesfull installation, trying again...'
+	##	echo 'Unsuccesfull installation, trying again...'
 
-		sudo dpkg -s $BASENAME
-		sudo apt-get install $BASENAME
-	fi
+	##	sudo dpkg -s $BASENAME
+	##	sudo apt-get install $BASENAME
+	## fi
 
 	echo "Done!"
 }
