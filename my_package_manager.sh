@@ -96,9 +96,10 @@ src () {
 	cd "$FOLDER_PATH"
 
 	# Compile package
-	./configure
-	sudo make
-	sudo make install
+	(./configure && sudo make && sudo make install) && echo "Installation succesfull"
+
+	# Remove tarball
+	rm "../$BASENAME"
 }
 
 
